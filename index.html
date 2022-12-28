@@ -1,198 +1,46 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-  <style>
- 
-
-
-       
-    </style>
+<script type="text/javascript">
   
 
-</head>
+  var config = {
+    partner_id: 'XxDi4W65d2',
+    locale: 'en',
+    disablePersist: true, // Don't persist state
+    env: 'test', // for test env. Change to prod for production deployment
+    // When using renderTo option plugin will render inside 
+    // the given DOM element instead of using a modal.
+    // The plugin will adapt its size to fill the parent container, 
+    // you have to adjust parent container dimensions according
+    // to device size in order to ensure the best user experience
 
-    
-<body>
-
-  <h2></h2>
-  <h3></h3>
-
-
-
-
-<!--popup html end-->
-    
-    
-    
-    
-  <script>
-  
-  /*
-  VTO User ID: 7cwM78j1S3
-  
-  <button ontouchstart="return true;" class="tr">mousedown+mouseup</button><br>
-<button ontouchstart="return true;" class="tr no-tr-in">mouseup</button><br>
-<button ontouchstart="return true;">Instant</button>
-
-<button>Default Button</button>
-<a href="#" class="button">Link Button</a>
-<button class="button">Button</button>
-<input type="button" class="button" value="Input Button">
-  
-  */
-  
-  
-    var total = 0;
-    var config = {
-      partner_id: 0,
-      locale: 'en',
-      env: 'test', // for test env. Change to prod for production deployment
-      onAddToCart: function (products) {
-        // To be filled in by skincaredemo
-        if (Array.isArray(products)) {
-          // Array means we got multiple products (add all to cart)
-          console.log("User clicked add all cart. Adding all products to shopping cart.");
-          console.log(products);
-
-        } else {
-          // Single object means we got one product (add to cart)
-          console.log("User clicked add to cart. Adding the product to shopping cart.");
-      }
-          },
-      onClose: function () {
-        // User closed modal. Here you could forward them to checkout if they had 
-        // added products (onAddToCart was called before).
-        console.log('User clicked close');
-      },
-      onCheckout: function (data) {
-        // User clicked the checkout button that is visible on results page
-        // after adding one or more products to cart. Redirect to checkout page?
-        console.log('User clicked checkout');
-          Revieve.API.hide();
-      },
-      onClickProduct: function (product) {
-        // To be filled in by skincaredemo. 
-        console.log("User clicked info action.");
-        console.log(product);
-         
-        var win = window.open(product.url, '_blank');
-        win.focus();
-      },
-        onPageChange: function() {  //activePageIndex as parameter expected
-            console.log("Page changed observed!");
-            
-      // User navigates to page with index specified by activePageIndex
-    },
-        onDisplayProducts: function(history_id, products) {
-      console.log("Products displayed");
-           
-            // Products were displayed to the user.
-      //
-      // Params:
-      // 1. history_id: the internal revieve id for this query.
-      // 2. products: array of products.
-    },
-    onExpandProduct: function(product) {
-      console.log("User expanded product card");
-       
-        // User expanded product card (if option available).
-      // Receives product object as a parameter.
-    },
-                
-        
-         onImageAnalysisFinished: function(cvResults) {
-      console.log("CV results generated")
-             
-             // Image upload and analysis done. 
-      //
-      // Params:
-      // 1. Results from CV as a parameter.
-      // 
-    },       
-        
-        
-        onAnalyticsEvent: function(event) {
-      // Plugin sent analytics event
-      console.debug('event:', event);
-      // example event data
-      /* {
-        category: "User Input",
-        action: "Set dull_tired_ui",
-        label: "1"
-      }
-      */
-    },
-    onAnalyticsPageview: function(pageview) {
-      // Plugin sent analytics pageview
-      console.debug('pageview:', pageview);
-      // example pageview data
-      /*
-      {
-        path: "/modal/skinType",
-        title: "SkinType"
-      }
-      */
+    // This could be a div overlaid with the product image div
+    // for example.
+    renderTo: document.getElementById('revieve-container'),
+    onClose: function() {
+      // User clicked close button
+      console.log('User clicked close');
     }
-    };
+  };
 
-    (function () {
-      var rv = document.createElement('script');
-      rv.src = 'https://d38knilzwtuys1.cloudfront.net/revieve-plugin-v4/revieve-plugin-loader.js';
-      rv.charset = 'utf-8';
-      rv.type = 'text/javascript';
-      rv.async = 'true';
-      rv.onload = rv.onreadystatechange = function () {
-        var rs = this.readyState;
-        if (rs && rs != 'complete' && rs != 'loaded') return;
-        /*
-          Revieve.Init(config, function () {
-          // Comment out the below line if you want to open the modal
-          // manually when user clicks a certain button or navigates
-          // to certain page.
-          //Revieve.API.show();
-        });*/
-          
-           window.runRevieveInstance = function (partnerId) {
-      Revieve.API.unmount();
-               config.partner_id = partnerId;
-      Revieve.Init(config, function () {
+  (function() {
+    var rv = document.createElement('script');
+    rv.src = 'https://d38knilzwtuys1.cloudfront.net/revieve-plugin-v4/revieve-plugin-loader.js';
+    rv.charset = 'utf-8';
+    rv.type = 'text/javascript';
+    rv.async = 'true';
+    rv.onload = rv.onreadystatechange = function() {
+      var rs = this.readyState;
+      if (rs && rs != 'complete' && rs != 'loaded') return;
+      Revieve.Init(config, function() {
+        // Comment out the below line if you want to open the modal
+        // manually when user clicks a certain button or navigates
+        // to certain page.
+
+        // Optimally call this method only after the user has clicked
+        // a "try on" button
         Revieve.API.show();
-      })
-    }  
-           runRevieveInstance('y43jTVqCGV');
-          //Sample Partner ID - aKn7oJOUdI
-          //Poya VTO - y43jTVqCGV
-          
-      };
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(rv, s);
-    })();
-      
-  
-       /*
-       s = setInterval(function() {      
-           --timer;      
-           document.getElementById("timer").text(timer);
-       }, 1000);
-      */
-   
-      
-      
-
-
-  
-
-
-
-
-
-//popup timer logic end
-      
-      
-  </script>
-
-  
- 
-</body>
-
-</html>
+      });
+    };
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(rv, s);
+  })();
+</script>
